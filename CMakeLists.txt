@@ -9,8 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(yak
     src/game.cpp
     src/entity.cpp
-    src/internal/renderer.cpp
-    src/components/graphics/sprite.cpp
+    src/managers/texture.cpp
 )
 
 target_include_directories(yak

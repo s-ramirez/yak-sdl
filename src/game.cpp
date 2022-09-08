@@ -2,37 +2,54 @@
 
 using namespace Yak;
 
-namespace
-{
-    SDL_Texture *playerTex;
-    SDL_Rect srcR, destR;
-}
+SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game()
 {
 }
 
-Game::~Game()
-{
-}
-
-void Game::init(const Config c)
+void Game::Init(const Config c)
 {
     game_config = c;
 
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
         std::cout << "SDL Initialized..." << std::endl;
-        renderer.Init(game_config);
-        game_running = true;
-        if (game_config.OnInit != nullptr)
+
+        int flags = 0;
+
+        if (game_config.fullscreen)
         {
-            game_config.OnInit();
+            flags = SDL_WINDOW_FULLSCREEN;
+        }
+
+        window = SDL_CreateWindow(game_config.name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, game_config.width, game_config.height, flags);
+        renderer = SDL_CreateRenderer(window, -1, 0);
+
+        if (renderer)
+        {
+            int res = SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+            if (res != 0)
+            {
+                std::cout << "Eroor setting color" << std::endl;
+                std::cout << SDL_GetError() << std::endl;
+            }
+            else
+            {
+                std::cout << "Render created..." << std::endl;
+            }
+
+            if (game_config.OnInit != nullptr)
+            {
+                game_config.OnInit();
+            }
+            texture = TextureManager::LoadTexture("/content/sprites/player.png");
+            game_running = true;
         }
     }
 }
 
-void Game::run()
+void Game::Run()
 {
     frame_delay = 1000 / game_config.target_fps;
 
@@ -40,9 +57,9 @@ void Game::run()
     {
         frame_start = SDL_GetTicks();
 
-        handle_events();
-        update();
-        render();
+        HandleEvents();
+        Update();
+        Render();
 
         frame_time = SDL_GetTicks() - frame_start;
 
@@ -53,7 +70,7 @@ void Game::run()
     }
 }
 
-void Game::handle_events()
+void Game::HandleEvents()
 {
     SDL_Event event;
     SDL_PollEvent(&event);
@@ -69,31 +86,31 @@ void Game::handle_events()
     }
 }
 
-void Game::update()
+void Game::Update()
 {
-
-    destR.h = 24;
-    destR.w = 24;
-
     if (game_config.OnUpdate != nullptr)
     {
         game_config.OnUpdate();
     }
 }
 
-void Game::render()
+void Game::Render()
 {
-    renderer.Clear();
-    renderer.Update();
+    SDL_RenderClear(renderer);
+    if (game_config.OnRender != nullptr)
+    {
+        game_config.OnRender();
+    }
+    SDL_RenderPresent(renderer);
 }
 
-void Game::clean()
+void Game::Clean()
 {
     SDL_Quit();
     std::cout << "Game Cleaned" << std::endl;
 }
 
-bool Game::running()
+bool Game::Running()
 {
     return game_running;
 }

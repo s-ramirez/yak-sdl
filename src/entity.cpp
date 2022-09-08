@@ -1,18 +1,20 @@
 #include <yak/entity.h>
-#include <yak/components/graphics/sprite.h>
+#include <yak/managers/texture.h>
+
 using namespace Yak;
 
-Entity::Entity(const char *sprite_path)
+Entity::Entity(const char *sprite_path, int xpos, int ypos)
 {
-    Sprite sprite;
-    sprite.Load(sprite_path);
-    //  spritesheet = Renderer::DrawImage(, );
+    texture = TextureManager::LoadTexture(sprite_path);
+
+    x = xpos;
+    y = ypos;
 }
 
 void Entity::Update()
 {
-    x = 0;
-    y = 0;
+    // x++;
+    // y++;
 
     src_rect.h = 24;
     src_rect.w = 24;
@@ -27,5 +29,9 @@ void Entity::Update()
 
 void Entity::Render()
 {
-    // SDL_RenderCopy(renderer, spritesheet, &src_rect, &dest_rect);
+    int res = SDL_RenderCopy(Game::renderer, texture, &src_rect, &dest_rect);
+    if (res != 0)
+    {
+        std::cout << SDL_GetError() << std::endl;
+    }
 }

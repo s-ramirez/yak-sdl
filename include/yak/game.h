@@ -1,9 +1,9 @@
 #pragma once
-#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
+#include <yak/managers/texture.h>
 #include <yak/common.h>
-#include <yak/internal/renderer.h>
+#include <iostream>
 
 namespace Yak
 {
@@ -13,22 +13,26 @@ namespace Yak
         Game();
         ~Game();
 
-        void init(const Config config);
-        void handle_events();
-        void run();
-        void update();
-        void render();
-        void clean();
+        void Init(const Config config);
+        void HandleEvents();
+        void Run();
+        void Update();
+        void Render();
+        void Clean();
 
-        bool running();
+        bool Running();
+
+        static SDL_Renderer *renderer;
 
     private:
         bool game_running;
         Config game_config;
-        Renderer renderer;
 
         int frame_delay;
         Uint32 frame_start;
         int frame_time;
+
+        SDL_Window *window;
+        SDL_Texture *texture;
     };
 }

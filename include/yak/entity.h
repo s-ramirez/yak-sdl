@@ -4,19 +4,16 @@
 
 namespace Yak
 {
-    class Entity
+    class Entity : public Component
     {
     public:
-        Entity(const char *spritesheet);
+        Entity(const char *spritesheet, int xpos, int ypos);
         ~Entity();
 
         void Update();
         void Render();
 
-    private:
-        int x;
-        int y;
-
+        SDL_Texture *texture;
         SDL_Rect src_rect, dest_rect;
     };
 }
