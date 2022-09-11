@@ -1,4 +1,4 @@
-#include <yak/game.h>
+#include <yak/game.hpp>
 
 using namespace Yak;
 
@@ -43,7 +43,6 @@ void Game::Init(const Config c)
             {
                 game_config.OnInit();
             }
-            texture = TextureManager::LoadTexture("/content/sprites/player.png");
             game_running = true;
         }
     }

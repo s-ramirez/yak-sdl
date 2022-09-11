@@ -1,8 +1,8 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
-#include <yak/managers/texture.h>
-#include <yak/common.h>
+#include <yak/managers/texture.hpp>
+#include <yak/common.hpp>
 #include <iostream>
 
 namespace Yak
@@ -33,6 +33,5 @@ namespace Yak
         int frame_time;
 
         SDL_Window *window;
-        SDL_Texture *texture;
     };
 }

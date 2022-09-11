@@ -8,8 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(yak
     src/game.cpp
-    src/entity.cpp
+    src/gameobject.cpp
     src/managers/texture.cpp
+    src/components/component.cpp
+    src/components/animation.cpp
 )
 
 target_include_directories(yak
