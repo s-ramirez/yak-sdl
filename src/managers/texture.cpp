@@ -10,6 +10,16 @@ SDL_Texture *TextureManager::LoadTexture(const char *file_name)
 	return tex;
 }
 
+int TextureManager::GetTextureDimensions(SDL_Texture *texture, int *width, int *height)
+{
+	int return_code = SDL_QueryTexture(texture, nullptr, nullptr, width, height);
+	if (return_code != 0)
+	{
+		throw std::runtime_error(IMG_GetError());
+	}
+	return return_code;
+}
+
 void TextureManager::Draw(SDL_Texture *texture, int x, int y, int width, int height, SDL_RendererFlip flip)
 {
 	SDL_Rect src_rect = {0, 0, width, height};

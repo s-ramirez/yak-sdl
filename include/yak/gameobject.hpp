@@ -19,7 +19,7 @@ namespace Yak
 
         void AddComponent(Component *cpt);
         void RemoveComponent(Component *cpt);
-        std::weak_ptr<Component> GetComponent(Types type);
+        std::weak_ptr<Component> GetComponent(const std::string &type);
 
         int priority;
         SDL_Texture *texture;

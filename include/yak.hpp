@@ -7,6 +7,6 @@
 #include "yak/gameobject.hpp"
 #include "yak/game.hpp"
 
-#include "yak/components/component.hpp"
 #include "yak/components/animation.hpp"
+#include "yak/components/component.hpp"
 #include "yak/managers/texture.hpp"

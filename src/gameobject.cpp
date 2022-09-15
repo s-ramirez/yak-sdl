@@ -22,8 +22,8 @@ void GameObject::Init()
 void GameObject::Update(float dt)
 {
     std::for_each(
-        components.begin(),
-        components.end(),
+        components.rbegin(),
+        components.rend(),
         [&](std::shared_ptr<Component> &cpt)
         { cpt->Update(dt); });
 }
@@ -60,7 +60,7 @@ void GameObject::RemoveComponent(Component *cpt)
     }
 }
 
-std::weak_ptr<Component> GameObject::GetComponent(Types type)
+std::weak_ptr<Component> GameObject::GetComponent(const std::string &type)
 {
     auto found = std::find_if(
         components.begin(),
